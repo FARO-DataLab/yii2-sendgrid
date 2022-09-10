@@ -1,6 +1,7 @@
 <?php
 namespace wadeshuler\sendgrid;
 
+use SendGrid\Mail\EmailAddress;
 use SendGrid\Mail\Personalization;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -488,22 +489,22 @@ class Message extends BaseMessage
                             foreach ($envelope['to'] as $key => $val) {
                                 if ( is_int($key) ) {
                                     // `[0 => email]`
-                                    $personalization->addTo( new \SendGrid\Email(null, $val) );
+                                    $personalization->addTo( new EmailAddress(null, $val) );
                                 } else {
                                     // `[email => name]`
-                                    $personalization->addTo( new \SendGrid\Email($val, $key) );
+                                    $personalization->addTo( new EmailAddress($val, $key) );
                                 }
                             }
                         } else {
-                            $personalization->addTo( new \SendGrid\Email(null, $envelope['to']) );
+                            $personalization->addTo( new EmailAddress(null, $envelope['to']) );
                         }
 
                         if ( isset($envelope['cc']) ) {
-                            $personalization->addCc( new \SendGrid\Email(null, $envelope['cc']) );
+                            $personalization->addCc( new EmailAddress(null, $envelope['cc']) );
                         }
 
                         if ( isset($envelope['bcc']) ) {
-                            $personalization->addBcc( new \SendGrid\Email(null, $envelope['bcc']) );
+                            $personalization->addBcc( new EmailAddress(null, $envelope['bcc']) );
                         }
 
                         if ( isset($envelope['subject']) ) {
@@ -547,22 +548,22 @@ class Message extends BaseMessage
                     foreach ($this->to as $key => $val) {
                         if ( is_int($key) ) {
                             // `[0 => email]`
-                            $personalization->addTo( new \SendGrid\Email(null, $val) );
+                            $personalization->addTo( new EmailAddress(null, $val) );
                         } else {
                             // `[email => name]`
-                            $personalization->addTo( new \SendGrid\Email($val, $key) );
+                            $personalization->addTo( new EmailAddress($val, $key) );
                         }
                     }
                 } else {
-                    $personalization->addTo( new \SendGrid\Email(null, $this->to) );
+                    $personalization->addTo( new EmailAddress(null, $this->to) );
                 }
 
                 if ( isset($this->bcc) ) {
-                    $personalization->addBcc( new \SendGrid\Email(null, $this->bcc) );
+                    $personalization->addBcc( new EmailAddress(null, $this->bcc) );
                 }
 
                 if ( isset($this->cc) ) {
-                    $personalization->addCc( new \SendGrid\Email(null, $this->cc) );
+                    $personalization->addCc( new \EmailAddress(null, $this->cc) );
                 }
 
                 if ( isset($this->substitutions) && is_array($this->substitutions) ) {
@@ -577,13 +578,13 @@ class Message extends BaseMessage
 
             if ( is_array($this->from) ) {
                 if ( is_numeric(key($this->from)) ) {
-                    $this->getSendGridMail()->setFrom( new \SendGrid\Email(null, $this->from[0]) );
+                    $this->getSendGridMail()->setFrom( new EmailAddress(null, $this->from[0]) );
                 } else {
                     reset($this->from);     // reset pointer to beginning. Necessary when using current() and key()
-                    $this->getSendGridMail()->setFrom( new \SendGrid\Email(current($this->from), key($this->from)) );
+                    $this->getSendGridMail()->setFrom( new EmailAddress(current($this->from), key($this->from)) );
                 }
             } else {
-                $this->getSendGridMail()->setFrom( new \SendGrid\Email(null, $this->from) );
+                $this->getSendGridMail()->setFrom( new EmailAddress(null, $this->from) );
             }
 
             // SendGrid-PHP library only supports string email
