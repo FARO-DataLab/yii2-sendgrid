@@ -2,6 +2,7 @@
 namespace wadeshuler\sendgrid;
 
 use SendGrid\Mail\EmailAddress;
+use SendGrid\Mail\From;
 use SendGrid\Mail\Mail;
 use SendGrid\Mail\Personalization;
 use Yii;
@@ -579,13 +580,13 @@ class Message extends BaseMessage
 
             if ( is_array($this->from) ) {
                 if ( is_numeric(key($this->from)) ) {
-                    $this->getSendGridMail()->setFrom( new EmailAddress(null, $this->from[0]) );
+                    $this->getSendGridMail()->setFrom( new From(null, $this->from[0]) );
                 } else {
                     reset($this->from);     // reset pointer to beginning. Necessary when using current() and key()
-                    $this->getSendGridMail()->setFrom( new EmailAddress(current($this->from), key($this->from)) );
+                    $this->getSendGridMail()->setFrom( new From(current($this->from), key($this->from)) );
                 }
             } else {
-                $this->getSendGridMail()->setFrom( new EmailAddress(null, $this->from) );
+                $this->getSendGridMail()->setFrom( new From(null, $this->from) );
             }
 
             // SendGrid-PHP library only supports string email
