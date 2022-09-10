@@ -2,6 +2,7 @@
 namespace wadeshuler\sendgrid;
 
 use SendGrid\Mail\EmailAddress;
+use SendGrid\Mail\Mail;
 use SendGrid\Mail\Personalization;
 use Yii;
 use yii\base\InvalidConfigException;
@@ -189,12 +190,12 @@ class Message extends BaseMessage
     /**
      * Create SendGrid Mail object
      *
-     * @return \SendGrid\Mail
+     * @return Mail
      * @throws \yii\base\InvalidConfigException
      */
     public function createSendGridMail()
     {
-        return new \SendGrid\Mail();
+        return new Mail();
     }
 
     public function addPersonalization($personalization)
