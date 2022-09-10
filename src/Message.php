@@ -1,6 +1,7 @@
 <?php
 namespace wadeshuler\sendgrid;
 
+use SendGrid\Mail\Personalization;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\InvalidParamException;
@@ -481,7 +482,7 @@ class Message extends BaseMessage
 
                     } else {
 
-                        $personalization = new \SendGrid\Personalization();
+                        $personalization = new Personalization();
 
                         if ( is_array($envelope['to']) ) {
                             foreach ($envelope['to'] as $key => $val) {
@@ -540,7 +541,7 @@ class Message extends BaseMessage
             } else {
 
                 // Single Send Mode
-                $personalization = new \SendGrid\Personalization();
+                $personalization = new Personalization();
 
                 if ( is_array($this->to) ) {
                     foreach ($this->to as $key => $val) {
